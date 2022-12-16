@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: fri-api-prod
+    repo: https://github.com/frjalsar/monorepo.git
+    env: node    
+    rootDir: api-service
+    region: frankfurt
+    plan: starter
+    previewPlan: starter    
+    buildCommand: npm ci
+    startCommand: node ./server/index.js
+    autoDeploy: false
+    domains:
+      - api.fri.is
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fri-db-prod
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: fri-store-prod
+          property: connectionString
+      - fromGroup: Thor
+      - fromGroup: Mailgun    
+  - type: web    
+    name: fri-admin-prod
+    repo: https://github.com/frjalsar/monorepo.git
+    env: static        
+    rootDir: admin
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    autoDeploy: false
+    domains:
+      - admin.fri.is
+    envVars:
+      - key: VITE_FRI_API_URL
+        value: https://api.fri.is
+  - type: redis
+    name: fri-store-prod
+    region: frankfurt
+    plan: starter    
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: everywhere
+databases:
+  - name: fri-db-prod
+    plan: starter
+    previewPlan: starter
+    region: frankfurt
