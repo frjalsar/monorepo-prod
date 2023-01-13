@@ -1,4 +1,31 @@
-services:
+services:  
+  - type: web
+    name: fri-admin-prod
+    repo: https://github.com/frjalsar/monorepo.git
+    env: static        
+    rootDir: admin
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    autoDeploy: false
+    domains:
+      - admin.fri.is
+    envVars:
+      - key: VITE_FRI_API_URL
+        value: https://api.fri.is
+  - type: web
+    name: fri-umsokn-prod
+    repo: https://github.com/frjalsar/monorepo.git
+    env: static
+    rootDir: umsokn
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    autoDeploy: true
+    domains:
+      - umsokn.fri.is
+    envVars:
+      - key: VITE_FRI_API_URL
+        value: https://api.fri.is
+      - fromGroup: ApiServiceKey
   - type: web
     name: fri-api-prod
     repo: https://github.com/frjalsar/monorepo.git
@@ -24,19 +51,6 @@ services:
           property: connectionString
       - fromGroup: Thor
       - fromGroup: Mailgun    
-  - type: web    
-    name: fri-admin-prod
-    repo: https://github.com/frjalsar/monorepo.git
-    env: static        
-    rootDir: admin
-    buildCommand: npm run build
-    staticPublishPath: ./dist
-    autoDeploy: false
-    domains:
-      - admin.fri.is
-    envVars:
-      - key: VITE_FRI_API_URL
-        value: https://api.fri.is
   - type: redis
     name: fri-store-prod
     region: frankfurt
