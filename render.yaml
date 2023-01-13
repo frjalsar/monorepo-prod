@@ -19,7 +19,7 @@ services:
     rootDir: umsokn
     buildCommand: npm run build
     staticPublishPath: ./dist
-    autoDeploy: true
+    autoDeploy: false
     domains:
       - umsokn.fri.is
     envVars:
