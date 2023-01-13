@@ -13,7 +13,7 @@ services:
       - key: VITE_FRI_API_URL
         value: https://api.fri.is
   - type: web
-    name: fri-umsokn-prod
+    name: fri-umsokn
     repo: https://github.com/frjalsar/monorepo.git
     env: static
     rootDir: umsokn
