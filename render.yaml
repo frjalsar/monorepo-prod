@@ -50,7 +50,7 @@ services:
           name: fri-store-prod
           property: connectionString
       - fromGroup: Thor
-      - fromGroup: Mailgun    
+      - fromGroup: MailJet    
   - type: redis
     name: fri-store-prod
     region: frankfurt
