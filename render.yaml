@@ -12,6 +12,8 @@ services:
     envVars:
       - key: VITE_FRI_API_URL
         value: https://api.fri.is
+      - key: VITE_COUNTRIES_API_URL
+        value: https://restcountries.com
   - type: web
     name: fri-umsokn-prod
     repo: https://github.com/frjalsar/monorepo.git
@@ -34,8 +36,8 @@ services:
     region: frankfurt
     plan: starter
     previewPlan: starter    
-    buildCommand: npm ci
-    startCommand: node ./server/index.js
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
     autoDeploy: false
     domains:
       - api.fri.is
@@ -50,7 +52,7 @@ services:
           name: fri-store-prod
           property: connectionString
       - fromGroup: Thor
-      - fromGroup: MailJet    
+      - fromGroup: MailJet
   - type: redis
     name: fri-store-prod
     region: frankfurt
